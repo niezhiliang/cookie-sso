@@ -1,7 +1,6 @@
 package com.niezhiliang.cookie.sso.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.niezhiliang.cookie.sso.entity.CookieEntity;
 import com.niezhiliang.cookie.sso.entity.ResponseEntity;
 import com.niezhiliang.cookie.sso.entity.User;
 import com.niezhiliang.cookie.sso.exception.CookieErrorException;
@@ -21,6 +20,14 @@ public class LoginController {
     private String cookieName;
     @Value("${web.father}")
     private String fatherurl;
+
+    /**
+     * 登录接口
+     * @param user
+     * @param response
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "login")
     public String login(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
         boolean flag =
@@ -44,6 +51,11 @@ public class LoginController {
         return JSON.toJSONString(responseEntity);
     }
 
+    /**
+     * 校验用户是否已经登录
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "check")
     public String checklogin(HttpServletRequest request) {
         Cookie [] cookies = request.getCookies();
