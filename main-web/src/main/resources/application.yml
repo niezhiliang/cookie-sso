@@ -1,0 +1,7 @@
+cookie:
+  name: logincookie
+server:
+  port: 8088
+
+web:
+  father: .a.com
