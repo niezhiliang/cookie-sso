@@ -52,13 +52,13 @@ public class LoginController {
         if (cookies == null) {
             return null;
         }
-        CookieEntity cookieEntity = null;
+        User user = null;
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
 
-                cookieEntity = AuthenteUtil.splitCookie(cookie.getValue());
+                user = AuthenteUtil.splitCookie(cookie.getValue());
                 responseEntity.setCode(20);
-                responseEntity.setData(cookieEntity);
+                responseEntity.setData(user);
             }
         }
         return JSON.toJSONString(responseEntity);

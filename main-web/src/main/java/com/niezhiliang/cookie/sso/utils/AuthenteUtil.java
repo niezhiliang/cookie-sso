@@ -1,11 +1,14 @@
 package com.niezhiliang.cookie.sso.utils;
 
 import com.niezhiliang.cookie.sso.entity.CookieEntity;
+import com.niezhiliang.cookie.sso.entity.User;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class AuthenteUtil {
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
+    private static final Long USERID = 1l;
 
     /**
      * 判断是否登录
@@ -27,17 +30,16 @@ public class AuthenteUtil {
 
     /**
      * 拿到cookie 解析出userid一些其他参数
-     * @param cookieValue
+     * @param token
      * @return
      */
-    public static CookieEntity splitCookie(String cookieValue) {
-        String [] strs = cookieValue.split("&");
-        CookieEntity cookieEntity = new CookieEntity();
-        cookieEntity.setIp(strs[0]);
-        cookieEntity.setUserid(strs[1]);
-        //cookieEntity.setDate(new Date(strs[2]));
-
-        return cookieEntity;
+    public static User splitCookie(String token) {
+        User user = new User();
+        String ip = new JwtUtil().getIp(token);
+        Long userid = Long.parseLong(new JwtUtil().getUserIdByToken(token));
+        user.setIp(ip);
+        user.setUserid(userid);
+        return user ;
     }
 
     /**
@@ -46,11 +48,9 @@ public class AuthenteUtil {
      * @return
      */
     public static String generalCookie(String ip) {
-        Long currtime = System.currentTimeMillis();
-        String userid = "1";
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(ip).append("&"+userid).append("&"+currtime);
-        return stringBuffer.toString();
+        User user = new User(USERID,USERNAME,PASSWORD,ip);
+        new JwtUtil().generateToken(user);
+        return new JwtUtil().generateToken(user);
     }
 
     /**
