@@ -39,7 +39,7 @@ public class LoginController {
             Cookie cookie = new Cookie(cookieName, AuthenteUtil.generalCookie(ip));
             cookie.setMaxAge(30* 60);// 设置为30min
             //cookie.setDomain(".test.com");
-            cookie.setHttpOnly(true);
+            //cookie.setHttpOnly(true);
             cookie.setPath("/");
             System.out.println("已添加===============");
             response.addCookie(cookie);
@@ -74,5 +74,21 @@ public class LoginController {
             }
         }
         return JSON.toJSONString(responseEntity);
+    }
+
+    /**
+     * 完全跨域时为友方域名添加cookie
+     * @param cookieName
+     * @param cookieValue
+     * @return
+     */
+    @RequestMapping(value = "addcookie")
+    public String addCookie(String cookieName,String cookieValue,HttpServletResponse response) {
+        Cookie cookie = new Cookie(cookieName, cookieValue);
+        cookie.setMaxAge(30* 60);// 设置为30min
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        System.out.println("已添加===============1");
+        return null;
     }
 }

@@ -22,7 +22,7 @@ export default {
   post (url, data) {
     return axios({
       method: 'post',
-      baseURL: 'http://localhost:8088/',
+      baseURL: 'http://www.niezhiliang.com:8088/',
       url,
       data: data,
       timeout: 10000,

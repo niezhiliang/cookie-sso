@@ -1,8 +1,13 @@
 <template>
+  <div id="mydiv">
     <Table stripe :columns="columns1" :data="data1"></Table>
+    <iframe id="uib" :src="path" frameborder="0"></iframe>
+  </div>
 </template>
 <script>
   import request from './request.js'
+  import vc from 'vue-cookie'
+
     export default {
         data () {
             return {
@@ -45,7 +50,8 @@
                         address: 'Ottawa No. 2 Lake Park',
                         date: '2016-10-04'
                     }
-                ]
+                ],
+              path: 'http://nzl.fangxinqian.cn:8088/addcookie?cookieName=logincookie&cookieValue='
             }
         } ,
           created () {
@@ -58,6 +64,16 @@
                   }
                 })
             console.log('end')
+            this.setCookie()
+          },
+          methods: {
+            setCookie() {
+              var val = vc.get('logincookie');
+              this.path +=val
+
+              console.log(this.path)
+            }
           }
+
     }
 </script>
